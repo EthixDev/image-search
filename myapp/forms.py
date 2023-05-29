@@ -1,4 +1,5 @@
+
 from django import forms
 
-# class RegistrationForm(forms.Form):
-#     email = forms.EmailField(label='Your email')
+class UploadImageForm(forms.Form):
+    image = forms.ImageField()

@@ -4,9 +4,11 @@ from myapp.models import Image
 from helper import get_feature_vector
 import torch
 import json
-
-
-
+from django.shortcuts import render
+from django.http import HttpResponse
+from PIL import Image
+from io import BytesIO
+from .forms import UploadImageForm
 
 def create_feature_vector(request, id):
 
@@ -44,3 +46,18 @@ def image_detail(request, id):
        return render(request, "myapp/detail.html",{
           'Image_found' : False,
        })
+
+
+def search_images(request):
+
+    if request.method == 'POST':
+        form = UploadImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Do something with the uploaded file
+            image = form.cleaned_data['image']
+            feature_vector = get_feature_vector(image)
+
+            return HttpResponse(feature_vector)
+    else:
+        form = UploadImageForm()
+    return render(request, 'myapp/search.html', {'form': form})

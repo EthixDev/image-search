@@ -9,6 +9,11 @@ from django.http import HttpResponse
 from PIL import Image
 from io import BytesIO
 from .forms import UploadImageForm
+from django.http import JsonResponse
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+import pickle
+from myapp import models
 
 def create_feature_vector(request, id):
 
@@ -55,9 +60,24 @@ def search_images(request):
         if form.is_valid():
             # Do something with the uploaded file
             image = form.cleaned_data['image']
-            feature_vector = get_feature_vector(image)
+            feature_vector = get_feature_vector(image).reshape(1,-1)
 
-            return HttpResponse(feature_vector)
+            # Get all feature vectors from database
+            all_images = models.Image.objects.all()
+            all_feature_vectors = np.array([b.feature_vector['fv'] for b in all_images])
+
+            # Calculate similarity scores
+            similarity_scores = cosine_similarity(feature_vector, all_feature_vectors)
+            similarity_scores_falt = similarity_scores.flatten()
+            indices_sorted = np.argsort(similarity_scores_falt)
+            top_indices = indices_sorted[-2:][::-1]
+            top_indices = [index.item() for index in top_indices]
+            similar_images = [all_images[i].name for i in list(top_indices)]
+
+            # Return the similar images
+            # You might want to return more information here, like the actual similarity scores
+            return JsonResponse({'similar_images': similar_images})
     else:
         form = UploadImageForm()
     return render(request, 'myapp/search.html', {'form': form})
+

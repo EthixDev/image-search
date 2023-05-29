@@ -30,7 +30,7 @@ def create_feature_vector(request, id):
 
     return HttpResponse('Successfully created feature vector!')
 def index(request):
-    images = Image.objects.all()
+    images = models.Image.objects.all()
 
     return render(request, "myapp/index.html", 
                   {
@@ -40,7 +40,7 @@ def index(request):
 
 def image_detail(request, id):
     try:
-      selected_image = Image.objects.get(id=id)
+      selected_image = models.Image.objects.get(id=id)
     
       return render(request, "myapp/detail.html",{
 

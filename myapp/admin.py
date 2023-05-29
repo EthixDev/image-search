@@ -7,7 +7,7 @@ from myapp.models import Image
 class ImageAdmin(admin.ModelAdmin):
 
     list_display = [
-        'name','file','feature_vector'
+        'id', 'name','image','feature_vector'
     ]
 
 

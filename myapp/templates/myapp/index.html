@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All images</title>
+    <link rel="stylesheet" href="{% static 'myapp/styles/base.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/styles/all_meetups.css' %}">
+
+</head>
+<body id="body">
+  <header id="main-header">
+    <nav><a href="/myapp" id="main-logo">IMAGE SERARCH</a></nav>
+    <h1>we can search images on this site!</h1>
+  </header>
+  <main>
+    <section>
+        <h2>searching image</h2>
+        <ol>
+            {% for image_item in images%}
+            <li class = 'meetup-item'>
+             <article>
+                <div class="meetup-summary">
+                    <div class="meetup-image">
+                        <img src="{{image_item.image.url}}" alt="{{image_item.name}}">
+                    </div>
+                    <div class="meetup-detail">
+                        <h3>{{image_item.name}}</h3>                           
+                           <p>{{image_item.file}}</p>
+                    </div>
+                </div>
+                <div class="meetup-actions">
+                    <a href="{% url 'detail_image' image_item.id %}" class="btn">more details</a>
+                </div>
+             </article>
+            </li>
+            {% endfor %}
+        </ol>
+
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ meetup.title}}</title>
+    <link rel="stylesheet" href="{% static 'myapp/styles/base.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/styles/meetup_detail.css' %}">
+</head>
+<body id="body">
+    <main>
+        {% if Image_found %}
+        <article>
+
+            <img id="main-image" src="{{ image.image.url}}" alt="{{ image.name}}">
+            <section id="locatiion">
+            </section>
+            <section id="details">
+                <h2>what's This image About?</h2>
+                <p>{{image.name}}</p>
+                <footer>Need more details? <a href=""> please contact the organizer </a> (but don't spam us)</footer>
+            </section>
+        </article>
+        {% else %}
+        <h2>No image found for this slug, sorry!</h2>
+        {% endif %}
+    </main>
+</body>
+</html>

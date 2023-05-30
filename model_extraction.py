@@ -3,10 +3,11 @@ import torch
 from torchvision import models
 from torch import nn
 
-model = models.resnet50(pretrained=True)
-modules = list(model.children())[:-1]
-model = nn.Sequential(*modules)
+model = models.vgg19(pretrained=True)
 
+new_classifier =  model.classifier[:-3]
+model.classifier = new_classifier
+print(model)
 torch.save(model, 'model.pt')
 
 

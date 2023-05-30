@@ -34,9 +34,9 @@ def get_feature_vector(path):
     return output
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-#     path = 'media\cat.2540.jpg'
-#     output = get_feature_vector(path)
-#     print(output.shape)
-#     print(output)
+    path = 'media/cat.2636.jpg'
+    output = get_feature_vector(path)
+    print(output.shape)
+    print(output)

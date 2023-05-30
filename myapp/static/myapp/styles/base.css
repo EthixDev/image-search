@@ -21,13 +21,15 @@ h3 {
 button,
 .btn {
   cursor: pointer;
-  font: inherit;
+  /* font: inherit; */
   padding: 0.5rem 1.5rem;
   background-color: #350490;
   border: 1px solid #350490;
   color: white;
   border-radius: 4px;
   text-decoration: none;
+  text-align: right;
+
 }
 
 button:hover,
@@ -52,4 +54,14 @@ button:hover,
     text-decoration: none;
     color: #350490;
     font-weight: bold;
+}
+.form{
+  text-align: center;
+  font-size: xx-large;
+  border:solid;
+  width:400px;
+  height:300px;
+  margin-left: 30px;
+  padding:50px;
+  background-color: #e3dfea;
 }

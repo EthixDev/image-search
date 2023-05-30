@@ -1,5 +1,4 @@
 from django.shortcuts import render, HttpResponse
-from myapp.models import Image
 # import json
 from helper import get_feature_vector
 import torch
@@ -17,7 +16,7 @@ from myapp import models
 
 def create_feature_vector(request, id):
 
-    my_image = Image.objects.get(id=id)
+    my_image = models.Image.objects.get(id=id)
     path = my_image.image.path
 
     final_output = get_feature_vector(path)
@@ -64,7 +63,11 @@ def search_images(request):
 
             # Get all feature vectors from database
             all_images = models.Image.objects.all()
-            all_feature_vectors = np.array([b.feature_vector['fv'] for b in all_images])
+            all_feature_vectors = []
+            for b in all_images:
+                all_feature_vectors.append(json.loads(b.feature_vector)['fv'])
+            all_feature_vectors = np.array(all_feature_vectors)
+            # all_feature_vectors = np.array([json.loads(b.feature_vector)['fv'] for b in all_images])
 
             # Calculate similarity scores
             similarity_scores = cosine_similarity(feature_vector, all_feature_vectors)

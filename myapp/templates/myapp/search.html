@@ -1,3 +1,4 @@
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -5,14 +6,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>search</title>
+    <link rel="stylesheet" href="{% static 'myapp/styles/base.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/styles/meetup_detail.css' %}">
 </head>
-<body>
-    <form method="post" enctype="multipart/form-data">
+<body >
+<section class="form">
+    <form method="post" enctype="multipart/form-data"> 
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Upload</button>
+      <div id="registration-action">
+        <button>Upload</button>
+      </div>
     </form>
+</section>
     
 </body>
 </html>

@@ -7,7 +7,7 @@
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
-  background-color: #ccc3db;
+  background-color: #e4e0eb;
   color: #3e3e41;
 }
 
@@ -56,12 +56,20 @@ button:hover,
     font-weight: bold;
 }
 .form{
+  margin-left: 350px;
   text-align: center;
-  font-size: xx-large;
+  font-size: large;
   border:solid;
   width:400px;
   height:300px;
-  margin-left: 30px;
   padding:50px;
-  background-color: #e3dfea;
+  background-color: #f7f6f9;
+  margin-top: 50px;
+  display: inline-block;
+}
+img {
+  width:550px;
+  height: 400px;
+  margin-top: 50px;
+  padding:30px
 }

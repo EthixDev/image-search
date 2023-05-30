@@ -75,11 +75,18 @@ def search_images(request):
             indices_sorted = np.argsort(similarity_scores_falt)
             top_indices = indices_sorted[-2:][::-1]
             top_indices = [index.item() for index in top_indices]
-            similar_images = [all_images[i].name for i in list(top_indices)]
+            similar_images = [all_images[i] for i in list(top_indices)]
 
             # Return the similar images
             # You might want to return more information here, like the actual similarity scores
-            return JsonResponse({'similar_images': similar_images})
+            form = UploadImageForm()
+            
+            context={
+                 'similar_images': similar_images,
+                 'form':form
+            }
+            return render(request, 'myapp/search.html',context=context)
+
     else:
         form = UploadImageForm()
     return render(request, 'myapp/search.html', {'form': form})

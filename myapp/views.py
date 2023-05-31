@@ -1,5 +1,4 @@
 from django.shortcuts import render, HttpResponse
-# import json
 from helper import get_feature_vector
 import torch
 import json
@@ -59,8 +58,8 @@ def search_images(request):
         if form.is_valid():
             # Do something with the uploaded file
             image = form.cleaned_data['image']
-            feature_vector = get_feature_vector(image).reshape(1,-1)
-
+            feature_vector = get_feature_vector(image)
+            feature_vector = feature_vector.reshape(1,-1)
             # Get all feature vectors from database
             all_images = models.Image.objects.all()
             all_feature_vectors = []
@@ -85,9 +84,11 @@ def search_images(request):
                  'similar_images': similar_images,
                  'form':form
             }
-            return render(request, 'myapp/search.html',context=context)
+            response = render(request,'myapp/search.html',context)
+            return response
 
     else:
         form = UploadImageForm()
-    return render(request, 'myapp/search.html', {'form': form})
+        response = render(request, 'myapp/search.html', {'form': form})
+    return response
 

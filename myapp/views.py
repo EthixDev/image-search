@@ -13,18 +13,18 @@ import numpy as np
 import pickle
 from myapp import models
 
-def create_feature_vector(request, id):
+def create_feature_vector(request):
 
-    my_image = models.Image.objects.get(id=id)
-    path = my_image.image.path
-
-    final_output = get_feature_vector(path)
-    final_output = final_output.to(torch.float64)
-    my_data = {"fv": list(final_output.numpy())}
-    my_data = json.dumps(my_data)
-    my_image.feature_vector = my_data
-    # my_image.name = 'new namel'
-    my_image.save()
+    all_images = models.Image.objects.filter(feature_vector__isnull=True)
+    for image in all_images:
+        path = image.image.path
+        final_output = get_feature_vector(path)
+        final_output = final_output.to(torch.float64)
+        my_data = {"fv": list(final_output.numpy())}
+        my_data = json.dumps(my_data)
+        image.feature_vector = my_data
+        # my_image.name = 'new namel'
+        image.save()
 
     return HttpResponse('Successfully created feature vector!')
 def index(request):
@@ -89,6 +89,6 @@ def search_images(request):
 
     else:
         form = UploadImageForm()
-        response = render(request, 'myapp/search.html', {'form': form})
+    response = render(request, 'myapp/search.html', {'form': form})
     return response
 

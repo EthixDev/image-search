@@ -28,7 +28,7 @@ def create_feature_vector(request):
 
     return HttpResponse('Successfully created feature vector!')
 def index(request):
-    images = models.Image.objects.all()
+    images = models.Image.objects.all().order_by('name')[:3]
 
     return render(request, "myapp/index.html", 
                   {

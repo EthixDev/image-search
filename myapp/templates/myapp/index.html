@@ -4,43 +4,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All images</title>
     <link rel="stylesheet" href="{% static 'myapp/styles/base.css' %}">
-    <link rel="stylesheet" href="{% static 'myapp/styles/all_meetups.css' %}">
-
+    <link rel="stylesheet" href="{% static 'myapp/styles/index.css' %}">
 </head>
-<body id="body">
-  <header id="main-header">
-    <nav><a href="/myapp" id="main-logo">IMAGE SERARCH</a></nav>
-    <h1>we can search images on this site!</h1>
-  </header>
-  <main>
-    <section>
-        <h2>searching image</h2>
-        <ol>
-            {% for image_item in images%}
-            <li class = 'meetup-item'>
-             <article>
-                <div class="meetup-summary">
-                    <div class="meetup-image">
-                        <img src="{{image_item.image.url}}" alt="{{image_item.name}}">
-                    </div>
-                    <div class="meetup-detail">
-                        <h3>{{image_item.name}}</h3>                           
-                           <p>{{image_item.image}}</p>
-                    </div>
-                </div>
-                <div class="meetup-actions">
-                    <a href="{% url 'detail_image' image_item.id %}" class="btn">more details</a>
-                </div>
-             </article>
-            </li>
-            {% endfor %}
-        </ol>
 
+<body id="body">
+    <header id="main-navigation">
+        <h1> 
+           <a href="">Starting Page</a>
+        </h1>
+        <nav>
+            <a href="">All posts</a>
+        </nav>
+      </header>
+
+    <section id="welcome">
+        <header>
+            <img src="{% static "myapp\images\meron.jpg" %}" alt="Meron - The Author of This Website">
+            <h2>IMAGE SEMANTIC</h2>
+        </header>
+        <p>Hi I am Meron and I love to blog about tech and the world</p>
+      </section>
+
+      <section id="latest-posts">
+        <h2>searching image</h2>
+        <ul>
+           {% for image_item in images%}
+             <li>
+                <article class="post">
+                 <a href="">
+                  <img src="{{image_item.image.url}}" alt="{{image_item.name}}">
+                    <div class="post__content">
+                      <h3>{{image_item.name}}</h3>                           
+                      <h2>{{image_item.image}}</h2>
+                    </div>
+                 </a>
+               </article>
+              </li>
+            {% endfor %}
+        </ul>
     </section>
-  </main>
+
+</section>
+<section id="about">
+   <h2>What I Do</h2>
+   <p>
+      I have programming, I love to help others and I enjoy
+       exploring new technologies in general. 
+   </p>
+   <p>
+     My goal is to kip on growing as a developer - and if I'd be successful
+     by programming, I'd be very happy!
+  </p>
+</section>
 </body>
 </html>

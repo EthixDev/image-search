@@ -49,20 +49,19 @@ text-align: center;
     color: #cf79f1(197, 15, 15);
 }
 
-
-
   body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   background-color: #7d7c7f;
   color: #30088756;
+  height: 100%;
 } 
 
 h1,
 h2,
 h3 {
   font-family: 'Roboto Slab', sans-serif;
-  color: #c8c8ce;
+  color: #034511;
   font-weight: bold;
   align-items: center;
   text-align: center;

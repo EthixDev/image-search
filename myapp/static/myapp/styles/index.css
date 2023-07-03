@@ -19,7 +19,7 @@
     border-radius: 12px;
     background-color: #ffe1bf;
     transform: rotate(-5deg);
-    box-shadow: 0 2px 8px rgba(160, 155, 155, 0.25);
+    box-shadow: 0 2px 8px rgba(188, 17, 17, 0.25);
 }
 
 #welcome h2 {
@@ -35,18 +35,20 @@
 }
 
 #latest-posts {
-    background-color: white;
+    background-color: rgb(122, 118, 118);
     padding: 1rem;
     border-radius: 24px;
-    width: 60rem;
+    width: 72rem;
     margin-left: 5rem;
     margin-right: 5rem;
     margin-top: -5rem;
+    
 }
 
 #latest-posts h2 {
     text-align: center;
 }
+
 
 #latest-posts ul {
     list-style: none;
@@ -56,36 +58,46 @@
     gap: 1rem;
 }
 
+
 #latest-posts li {
-    flex: 1;
+    flex: auto;
 } 
 
 
 #latest-post {
-    background-color: white;
+    background-color: rgb(212, 238, 223);
     padding: 1rem;
     border-radius: 24px;
-    width: 60rem;
-    margin-left: 7rem;
-    margin-top: 7rem;
+    margin: 1rem;
+    margin-top: 5rem;
+    margin-left: 3rem;
+   
+
    
 }
 
-#latest-post h2 {
+#latest-post h3 {
     text-align: center;
+    max-width: 100px;
 }
 
 #latest-post ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
+    display:list-item;
     gap: 1rem;
 }
 
 #latest-post li {
-    flex: 1;
-} 
+    display: inline-block; 
+    width: 350px;
+    height: 400px;
+    background-color: #95c5e7;
+    margin: 1rem;
+}
+
+
 
 #about {
      text-align: center;
@@ -104,6 +116,7 @@
 }
 
 .post {
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -112,41 +125,46 @@
 
 .post a {
     text-decoration: none;
-    color: white;
+    color: black;
     transition: all 0.2s;
-    padding: 2rem;
+    padding: 10px;
+    
 }
 
 .post a:hover,
 .post a:active {
     transform: scale(1.1);
-    background-color: #390281;
+    background-color: #9281a8;
     color: black ;
+    width: 350px;
+    height: 400px;
 
 }
 
 .post img {
-    width: 10rem;
-    height: 10rem;
     object-fit: cover;
-    border-radius: 100;   
+    border-radius: 50; 
+    width:250px;
+    height: 250px;
+    margin-top: 20px;
+    padding:30px  
 }
 
  .post h3 {
     margin: 0.25rem 0;
  }
  
-.post time {
+/* .post time {
     color: #666666;
     margin: 0.25rem;
     font-style: italic;
     font-size: 0.85rem;
-}
+} */
 
-.post:hover time,
+/* .post:hover time,
 .post:active time {
-color: white;
-}
+color: white; */
+
 
 #summary {
     margin: 8rem auto 3rem auto;

@@ -34,6 +34,10 @@ def index(request):
                   {
                     'images' : images
                   })
+def all_posts(request):
+    all_posts = models.Image.objects.all().order_by('-name')
+    return render(request, 'myapp/all.html',
+                  {'all_posts': all_posts})
 
 
 def image_detail(request, id):

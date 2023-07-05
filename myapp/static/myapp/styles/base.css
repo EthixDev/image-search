@@ -16,16 +16,6 @@ body {
   height: 100%;
 } 
 
-h1,
-h2,
-h3{
-font-family: 'Lato', 'sans-serif';
-font-weight: bold;
-align-items: center;
-text-align: center;
-
-} 
-
 #main-navigation {
     width: 100%;
     height: 5rem;

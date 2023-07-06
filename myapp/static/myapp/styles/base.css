@@ -102,6 +102,7 @@ button:hover,
   background-color: #c8b4f2;
   margin-top: 50px;
   display: inline-block;
+  border-radius: 2rem;
 }
 
 

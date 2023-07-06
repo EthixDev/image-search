@@ -48,7 +48,7 @@ h1,
 h2,
 h3 {
   font-family: 'Roboto Slab', sans-serif;
-  color: #034511;
+  color: black;
   font-weight: bold;
   align-items: center;
   text-align: center;
@@ -57,7 +57,7 @@ h3 {
  button,
 .btn {
   cursor: pointer;
-   font: inherit; 
+  font: inherit; 
   padding: 0.5rem 1.5rem;
   background-color: #350490;
   border: 1px solid #350490;
@@ -110,5 +110,5 @@ img {
   height: 400px;
   margin-top: 50px;
   padding:30px;
-  border-radius: 3rem;
+  border-radius: 1rem;
 } 

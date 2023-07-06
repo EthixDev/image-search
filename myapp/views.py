@@ -15,7 +15,7 @@ from myapp import models
 
 def create_feature_vector(request):
 
-    all_images = models.Image.objects.filter(feature_vector__isnull=False)
+    all_images = models.Image.objects.filter(feature_vector__isnull=True)
     for image in all_images:
         path = image.image.path
         final_output = get_feature_vector(path)
@@ -28,14 +28,14 @@ def create_feature_vector(request):
 
     return HttpResponse('Successfully created feature vector!')
 def index(request):
-    images = models.Image.objects.all().order_by('title')[:3]
+    images = models.Image.objects.all().order_by('-image')[:3]
 
     return render(request, "myapp/index.html", 
                   {
                     'images' : images
                   })
 def all_posts(request):
-    all_posts = models.Image.objects.all()
+    all_posts = models.Image.objects.all().order_by('-image')
     return render(request, 'myapp/all.html',
                   {
                       'all_posts': all_posts

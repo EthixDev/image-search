@@ -1,7 +1,6 @@
 
 import torch
 from torchvision import models
-from torch import nn
 
 model = models.vgg19(pretrained=True)
 

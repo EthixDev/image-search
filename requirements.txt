@@ -1,0 +1,4 @@
+torchvision==0.20.1
+torch==2.5.1
+Django==5.1.3p
+scikit-learn==1.5.2

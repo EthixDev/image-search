@@ -1,7 +1,7 @@
 
 model.pt
 try.py
-
+data/
 ### Django ###
 *.log
 *.pot

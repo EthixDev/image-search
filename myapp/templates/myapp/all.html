@@ -1,43 +1,49 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All images</title>
-    <link rel="stylesheet" href="{% static 'myapp/styles/base.css' %}">
-    <link rel="stylesheet" href="{% static 'myapp/styles/index.css' %}">
-</head>
+{% block title %}All Images{% endblock %}
 
-<body id="body">
-    <header id="main-navigation">
-        <p> 
-           <a href="{% url 'index' %}">Starting Page</a>
-        </p>
-        <nav>
-            <a href="">All posts</a>
-        </nav>
-      </header>
+{% block content %}
+<section class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4">All Images</h2>
 
-      <section id="latest-post">
-        <h2>searching image</h2>
-        <ul>
-           {% for image_item in all_posts%}
-             <li>
-                <article class="post">
-                 <a href="{% url "detail_image" id=image_item.id %}">
-                  <img src="{{image_item.image.url}}" alt="{{image_item.title}}">
-                    <div class="post__content">
-                      <h3>{{image_item.title}}</h3>                           
-                      <h3>{{image_item.discrpition}}</h3>
+    <!-- Search Form -->
+    <form method="get" action="" class="mb-6">
+        <input type="text" name="search" placeholder="Search images..." value="{{ request.GET.search|default:'' }}" class="w-full p-2 border rounded-lg shadow-md" />
+        <button type="submit" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Search</button>
+    </form>
+
+    <!-- Images List -->
+    <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {% for image_item in all_posts %}
+        <li class="border rounded-lg overflow-hidden shadow-md">
+            <article class="post">
+                <a href="{% url 'detail_image' id=image_item.id %}" class="block hover:opacity-90">
+                    <img src="{{ image_item.image.url }}" alt="{{ image_item.title }}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg">{{ image_item.title }}</h3>
+                        <p class="text-gray-600">{{ image_item.discrpition }}</p>
                     </div>
-                 </a>
-               </article>
-              </li>
-            {% endfor %}
-        </ul>
-    </section>
-</body>
-</html>
+                </a>
+            </article>
+        </li>
+        {% empty %}
+        <p>No images found matching your criteria.</p>
+        {% endfor %}
+    </ul>
+
+    <!-- Pagination -->
+    <div class="mt-6 flex justify-center">
+        <span class="inline-flex items-center">
+            {% if all_posts.has_previous %}
+            <a href="?page={{ all_posts.previous_page_number }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">&laquo; Previous</a>
+            {% endif %}
+
+            <span class="px-4 py-2">{{ all_posts.number }} of {{ all_posts.paginator.num_pages }}</span>
+
+            {% if all_posts.has_next %}
+            <a href="?page={{ all_posts.next_page_number }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">Next &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</section>
+{% endblock %}

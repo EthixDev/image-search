@@ -1,6 +1,5 @@
-from django.contrib import admin
 from django.urls import path
-from app.views import create_feature_vector,index,image_detail, search_images,all_posts
+from app.views import create_feature_vector,image_detail, search_images,all_posts
 
 urlpatterns = [
    path('create/', create_feature_vector, name='create'),

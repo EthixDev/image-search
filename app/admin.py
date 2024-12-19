@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from myapp.models import Image
+from app.models import Image
 
 # Register your models here.
 

@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from .forms import UploadImageForm
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-from myapp import models
+from app import models
 
 
 def create_feature_vector(request):
@@ -27,12 +27,12 @@ def create_feature_vector(request):
 def index(request):
     images = models.Image.objects.all().order_by("-image")[:3]
 
-    return render(request, "myapp/index.html", {"images": images})
+    return render(request, "app/index.html", {"images": images})
 
 
 def all_posts(request):
     all_posts = models.Image.objects.all().order_by("-image")
-    return render(request, "myapp/all.html", {"all_posts": all_posts})
+    return render(request, "app/all.html", {"all_posts": all_posts})
 
 
 def image_detail(request, id):
@@ -41,7 +41,7 @@ def image_detail(request, id):
 
         return render(
             request,
-            "myapp/detail.html",
+            "app/detail.html",
             {
                 "Image_found": True,
                 "image": selected_image,
@@ -50,7 +50,7 @@ def image_detail(request, id):
     except Exception:
         return render(
             request,
-            "myapp/detail.html",
+            "app/detail.html",
             {
                 "Image_found": False,
             },
@@ -86,10 +86,10 @@ def search_images(request):
             form = UploadImageForm()
 
             context = {"similar_images": similar_images, "form": form}
-            response = render(request, "myapp/search.html", context)
+            response = render(request, "app/search.html", context)
             return response
 
     else:
         form = UploadImageForm()
-    response = render(request, "myapp/search.html", {"form": form})
+    response = render(request, "app/search.html", {"form": form})
     return response

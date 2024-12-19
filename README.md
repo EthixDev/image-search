@@ -73,7 +73,7 @@ image_semantic_search/
 ├── model_extraction.py    # Script to modify and save the pre-trained model
 ├── helper.py              # Utility functions (e.g., `get_feature_vector`)
 ├── manage.py              # Django management script
-├── myapp/                 # Django application
+├── app/                 # Django application
 ├── requirements.txt       # Project dependencies
 ├── venv/                  # Python virtual environment
 ```

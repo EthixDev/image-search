@@ -1,23 +1,83 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Semantic Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
 
-{% block title %}Home{% endblock %}
+    <!-- Navbar -->
+    <header class="bg-blue-600 text-white py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <a href="/" class="hover:text-blue-300">Image Semantic Search</a>
+            </h1>
+            <nav class="flex space-x-4">
+                <a href="/" class="hover:text-blue-300">Home</a>
+                <a href="app/posts" class="hover:text-blue-300">All Images</a>
+                <a href="app/search" class="hover:text-blue-300">Search</a>
+            </nav>
+        </div>
+    </header>
 
-{% block content %}
-<section class="text-center py-12 bg-gray-50 rounded-lg shadow-md">
-    <h2 class="text-4xl font-bold mb-4">Welcome to Image Semantic Search</h2>
-    <p class="text-lg text-gray-600">Upload images and find similar ones using advanced search capabilities.</p>
-</section>
+    <!-- Main Content -->
+    <main class="container mx-auto flex-1 mt-8">
+        <section class="text-center py-12 bg-gray-50 rounded-lg shadow-md">
+            <h2 class="text-4xl font-bold mb-4">Welcome to Image Semantic Search</h2>
+            <p class="text-lg text-gray-600">Upload images and find similar ones using advanced search capabilities.</p>
+        </section>
 
-<section class="mt-8">
-    <h3 class="text-2xl font-semibold mb-4">Latest Images</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {% for image_item in images %}
-        <article class="border p-4 rounded-lg shadow-md">
-            <img src="{{ image_item.image.url }}" alt="{{ image_item.title }}" class="mb-4 rounded">
-            <h4 class="font-bold">{{ image_item.title }}</h4>
-            <p>{{ image_item.discrpition }}</p>
-        </article>
-        {% endfor %}
-    </div>
-</section>
-{% endblock %}
+        <section id="latest-images" class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Latest Images</h3>
+            <div id="image-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <!-- Images will be inserted here by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Image Semantic Search Project | Built with Django & Tailwind CSS</p>
+        </div>
+    </footer>
+
+    <!-- Inline JavaScript -->
+    <script>
+        // Function to fetch the latest images
+        async function fetchLatestImages() {
+            const response = await fetch('/app/images/latest/');
+            const data = await response.json();
+
+            // Select the grid container
+            const grid = document.getElementById('image-grid');
+
+            // Clear any existing content
+            grid.innerHTML = '';
+
+            // Add each image to the grid
+            data.images.forEach(image => {
+                const imageCard = document.createElement('article');
+                imageCard.className = 'border p-4 rounded-lg shadow-md';
+                imageCard.innerHTML = `
+                    <img src="${image.url}" alt="${image.title}" class="mb-4 rounded">
+                    <h4 class="font-bold">${image.title}</h4>
+                    <p>${image.description}</p>
+                `;
+                grid.appendChild(imageCard);
+            });
+        }
+
+        // Fetch and render images on page load
+        fetchLatestImages();
+    </script>
+</body>
+</html>

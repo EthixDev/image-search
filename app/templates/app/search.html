@@ -1,23 +1,94 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Similar Images</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold mb-6">Search Similar Images</h1>
+        
+        <!-- Upload Form -->
+        <form id="uploadForm" enctype="multipart/form-data" class="space-y-4">
+            <label for="image" class="block text-sm font-medium text-gray-700">Upload an image:</label>
+            <input type="file" name="image" id="image" accept="image/*" class="block w-full p-2 border rounded-lg" required>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Upload & Search
+            </button>
+        </form>
 
-{% block title %}Search Images{% endblock %}
-
-{% block content %}
-<div class="bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-4">Upload Image to Find Similar Images</h2>
-    <form method="post" enctype="multipart/form-data" class="space-y-4">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Upload</button>
-    </form>
-
-    <div class="mt-8">
-        <h3 class="text-xl font-semibold mb-4">Similar Images</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {% for similar_image in similar_images %}
-            <img src="{{ similar_image.image.url }}" alt="Image" class="rounded shadow-md">
-            {% endfor %}
+        <!-- Results Section -->
+        <div id="results" class="mt-8">
+            <h2 class="text-xl font-semibold mb-4">Similar Images</h2>
+            <!-- Similar images will be dynamically inserted here -->
         </div>
     </div>
-</div>
-{% endblock %}
+
+    <!-- JavaScript -->
+    <script>
+        const apiUrl = "http://localhost:8000/app/search_similar_images/"; // Update with your API endpoint
+
+        async function uploadImage(event) {
+            event.preventDefault();
+
+            const form = document.getElementById("uploadForm");
+            const formData = new FormData(form);
+
+            // Display a loading indicator (optional)
+            const resultsContainer = document.getElementById("results");
+            resultsContainer.innerHTML = "<p class='text-gray-500'>Searching for similar images...</p>";
+
+            try {
+                // Send the image to the API
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("Error:", errorData.error);
+                    resultsContainer.innerHTML = "<p class='text-red-500'>Failed to find similar images. Please try again.</p>";
+                    return;
+                }
+
+                const data = await response.json();
+
+                // Render similar images
+                renderSimilarImages(data.similar_images);
+            } catch (error) {
+                console.error("An error occurred:", error);
+                resultsContainer.innerHTML = "<p class='text-red-500'>Something went wrong. Please try again later.</p>";
+            }
+        }
+
+        function renderSimilarImages(similarImages) {
+            const resultsContainer = document.getElementById("results");
+            resultsContainer.innerHTML = ""; // Clear previous results
+
+            if (!similarImages || similarImages.length === 0) {
+                resultsContainer.innerHTML = "<p class='text-gray-500'>No similar images found.</p>";
+                return;
+            }
+
+            const imageGrid = document.createElement("div");
+            imageGrid.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4";
+
+            similarImages.forEach(image => {
+                const imgElement = document.createElement("img");
+                imgElement.src = image.url;
+                imgElement.alt = "Similar Image";
+                imgElement.className = "rounded shadow-md";
+                imageGrid.appendChild(imgElement);
+            });
+
+            resultsContainer.appendChild(imageGrid);
+        }
+
+        document.getElementById("uploadForm").addEventListener("submit", uploadImage);
+    </script>
+</body>
+</html>
+

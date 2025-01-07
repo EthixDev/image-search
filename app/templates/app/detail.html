@@ -1,32 +1,71 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ image.name}}</title>
-    <link rel="stylesheet" href="{% static 'app/styles/base.css' %}">
-    <link rel="stylesheet" href="{% static 'app/styles/meetup_detail.css' %}">
+    <title>Image Details</title>
+    <link rel="stylesheet" href="/static/app/styles/base.css">
+    <link rel="stylesheet" href="/static/app/styles/meetup_detail.css">
 </head>
 <body id="body">
     <main>
-        {% if Image_found %}
-        <article>
-
-            <img id="main-image" src="{{ image.image.url}}" alt="{{ image.name}}">
-            <section id="locatiion">
-            </section>
+        <article id="image-article" style="display: none;">
+            <img id="main-image" src="" alt="">
+            <section id="location"></section>
             <section id="details">
-                <h2>what's This image About?</h2>
-                <h3>{{image.content}}</h3>
-                <footer>Need more details? <a href=""> please contact the organizer </a> (but don't spam us)</footer>
+                <h2>What's This Image About?</h2>
+                <h3 id="image-content"></h3>
+                <footer>
+                    Need more details? 
+                    <a href="">Please contact the organizer</a> (but don't spam us).
+                </footer>
             </section>
         </article>
-        {% else %}
-        <h2>No image found for this slug, sorry!</h2>
-        {% endif %}
+        <h2 id="no-image" style="display: none;">No image found for this ID, sorry!</h2>
     </main>
+
+    <script>
+        async function fetchImageDetails(imageId) {
+            try {
+                const response = await fetch(`/app/image/${imageId}/`);
+                console.log(response)
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Populate the HTML elements with the fetched data
+                    document.getElementById('main-image').src = data.image_url;
+                    document.getElementById('main-image').alt = data.name;
+                    document.getElementById('image-content').innerText = data.content;
+
+                    // Show the article
+                    document.getElementById('image-article').style.display = 'block';
+                } else {
+                    // Show the "No image found" message
+                    document.getElementById('no-image').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error fetching image details:', error);
+                document.getElementById('no-image').style.display = 'block';
+            }
+        }
+
+        // Get the image ID from the URL (e.g., /image-detail.html?id=1)
+        const params = new URLSearchParams(window.location.search);
+        const path = window.location.pathname;
+
+        // Extract the image ID from the URL using a regular expression
+        const match = path.match(/\/app\/get\/(\d+)/);
+
+        // If the match is found, get the ID; otherwise, handle the error
+        const imageId = match ? match[1] : null;
+        console.log(imageId)
+
+        if (imageId) {
+            fetchImageDetails(imageId);
+        } else {
+            document.getElementById('no-image').style.display = 'block';
+        }
+    </script>
 </body>
 </html>

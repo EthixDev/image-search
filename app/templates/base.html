@@ -3,16 +3,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>{% block title %}Image Semantic Search{% endblock %}</title>
+
+    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'app/styles/base.css' %}">
+
     {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="bg-gray-200 min-h-screen flex flex-col items-center justify-between">
 
-    <!-- Navbar -->
+    <div class="w-full max-w-5xl bg-white min-h-screen shadow-xl">
+        <!-- Navbar -->
     <header class="bg-blue-600 text-white py-4">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">
@@ -22,20 +31,20 @@
                 <a href="{% url 'index' %}" class="hover:text-blue-300">Home</a>
                 <a href="{% url 'posts' %}" class="hover:text-blue-300">All Images</a>
                 <a href="{% url 'search_images' %}" class="hover:text-blue-300">Search</a>
-            </nav>
-        </div>
-    </header>
+                </nav>
+            </div>
+        </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto flex-1 mt-8">
-        {% block content %}{% endblock %}
-    </main>
+        <!-- Main Content -->
+        <main class="flex-1 px-6 py-10">
+            {% block content %}{% endblock %}
+        </main>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-4 mt-8">
         <div class="container mx-auto text-center">
             <p>&copy; 2024 Image Semantic Search Project | Built with Django & Tailwind CSS</p>
-        </div>
+    </div>
     </footer>
 
 </body>

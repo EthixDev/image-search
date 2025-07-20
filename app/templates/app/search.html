@@ -3,21 +3,31 @@
 {% block title %}Search Images{% endblock %}
 
 {% block content %}
-<div class="bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-4">Upload Image to Find Similar Images</h2>
-    <form method="post" enctype="multipart/form-data" class="space-y-4">
+<div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200 max-w-5xl mx-auto">
+    <h2 class="text-3xl font-extrabold mb-6 text-center text-gray-800">Upload Image to Find Similar Images</h2>
+
+    <form method="post" enctype="multipart/form-data" class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-4 sm:space-y-0 justify-center">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Upload</button>
+        <div class="flex items-center space-x-4">
+            {{ form.image.label_tag }}
+            {{ form.image }}
+        </div>
+        <button type="submit" class="bg-purple-600 hover:bg-purple-700 transition-colors text-white font-semibold px-6 py-2 rounded-lg shadow">
+            <i class="fas fa-upload mr-2"></i> Upload
+        </button>
     </form>
 
-    <div class="mt-8">
-        <h3 class="text-xl font-semibold mb-4">Similar Images</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    {% if similar_images %}
+    <div class="mt-10">
+        <h3 class="text-2xl font-semibold mb-4 text-center text-gray-700">🔍 Similar Images</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {% for similar_image in similar_images %}
-            <img src="{{ similar_image.image.url }}" alt="Image" class="rounded shadow-md">
+            <div class="bg-gray-50 p-3 rounded-xl shadow hover:shadow-md transition-all border border-gray-200">
+                <img src="{{ similar_image.image.url }}" alt="Similar Image" class="rounded-lg object-cover w-full h-64">
+            </div>
             {% endfor %}
         </div>
     </div>
+    {% endif %}
 </div>
 {% endblock %}

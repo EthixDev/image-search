@@ -77,7 +77,7 @@ def search_images(request):
             similarity_scores = cosine_similarity(feature_vector, all_feature_vectors)
             similarity_scores_falt = similarity_scores.flatten()
             indices_sorted = np.argsort(similarity_scores_falt)
-            top_indices = indices_sorted[-2:][::-1]
+            top_indices = indices_sorted[-3:][::-1]
             top_indices = [index.item() for index in top_indices]
             similar_images = [all_images[i] for i in list(top_indices)]
 
